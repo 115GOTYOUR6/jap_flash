@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser(description="This is a program that takes the"
                                              " of japanese words and provides"
                                              " a test by randomly selecting"
                                              " words")
+
 parser.add_argument("filepath", type=str, help="the filepath to the text file"
                                                " containing all the words to"
                                                " be featured in the test")
@@ -18,12 +19,21 @@ parser.add_argument("test", type=str, choices=["meaning", "hiragana"],
 args = parser.parse_args()
 
 words = []
+line = 1
 with open(args.filepath, newline='') as f:
     reader = csv.DictReader(f)
     for row in reader:
         row["meaning"] = row["meaning"].split('/')
         row["hiragana"] = row["hiragana"].split('/')
-        words.append(row)
+        line += 1
+        # this should be set to the number of columns in the csv
+        if None not in row:
+            if len([i for i in row.keys() if row[i] is None]) == 0:
+                words.append(row)
+            else:
+                print("line {} failed".format(line))
+        else:
+            print("line {} failed".format(line))
 
 print("Type the answer or q to quit")
 print("If you can't answer a question type p to pass")
