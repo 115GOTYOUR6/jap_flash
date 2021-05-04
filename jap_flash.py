@@ -8,9 +8,9 @@ parser = argparse.ArgumentParser(description="This is a program that takes the"
                                              " a test by randomly selecting"
                                              " words")
 
-parser.add_argument("filepath", type=str, help="the filepath to the text file"
-                                               " containing all the words to"
-                                               " be featured in the test")
+parser.add_argument("filepath", type=str,
+                    help="the filepath to the text file containing all the"
+                    " words to be featured in the test")
 
 parser.add_argument("test", type=str, choices=["meaning", "hiragana"],
                     help="Determines the information the user will have to"
@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 words = []
 line = 1
-with open(args.filepath, newline='') as f:
+with open(args.filepath, encoding='utf-8') as f:
     reader = csv.DictReader(f)
     for row in reader:
         row["meaning"] = row["meaning"].split('/')
